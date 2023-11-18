@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="sylar">
+      <UniqueIdentifier>{3d2413d6-7615-4f81-bb98-e50f2f73581f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sylar\util.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\log.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\singleton.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\thread.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\noncopyable.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\mutex.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\config.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\macro.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\env.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\fiber.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\hook.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\scheduler.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\address.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\bytearray.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\timer.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\endia.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\fd_manager.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\iomanager.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\socket.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\stream.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\tcp_server.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\stream\socket_stream.h" />
+    <ClInclude Include="sylar\rock\rock_stream.h" />
+    <ClInclude Include="sylar\stream\async_socket_stream.h" />
+    <ClInclude Include="sylar\protocol.h" />
+    <ClInclude Include="sylar\rock\rock_protocol.h" />
+    <ClInclude Include="sylar\stream\zlib_stream.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sylar\main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\util.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\config.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\log.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\mutex.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\thread.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\env.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\fiber.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\scheduler.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\hook.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\iomanager.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\address.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\bytearray.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\fd_manager.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\timer.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\socket.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\stream.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\tcp_server.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\stream\socket_stream.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\rock\rock_stream.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\stream\async_socket_stream.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\protocol.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\rock\rock_protocol.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\stream\zlib_stream.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sylar\logserver.proto" />
+  </ItemGroup>
+</Project>

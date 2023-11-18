@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{f010c39a-116d-49bf-915e-865b9f4e9dc1}</ProjectGuid>
+    <RootNamespace>sylar</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>E:\LIB\OpenSSL-Win64\include;E:\LIB\boost_1_83_0;E:\LIB\yaml-cpp\include;E:\LIB\protobuf\src;E:\LIB\zlib;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\LIB\OpenSSL-Win64\lib;E:\LIB\boost_1_83_0\stage\lib;E:\LIB\yaml-cpp\build\Debug;E:\LIB\protobuf\build\Debug;E:\LIB\zlib\contrib\vstudio\vc14\x64\ZlibStatDebug;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>E:\LIB\OpenSSL-Win64\lib;E:\LIB\boost_1_83_0\stage\lib;E:\LIB\yaml-cpp\build\Debug;E:\LIB\protobuf\build\Debug;E:\LIB\zlib\contrib\vstudio\vc14\x64\ZlibStatDebug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>yaml-cppd.lib;libprotobufd;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="sylar\address.h" />
+    <ClInclude Include="sylar\bytearray.h" />
+    <ClInclude Include="sylar\config.h" />
+    <ClInclude Include="sylar\endia.h" />
+    <ClInclude Include="sylar\env.h" />
+    <ClInclude Include="sylar\fd_manager.h" />
+    <ClInclude Include="sylar\fiber.h" />
+    <ClInclude Include="sylar\hook.h" />
+    <ClInclude Include="sylar\iomanager.h" />
+    <ClInclude Include="sylar\log.h" />
+    <ClInclude Include="sylar\macro.h" />
+    <ClInclude Include="sylar\mutex.h" />
+    <ClInclude Include="sylar\noncopyable.h" />
+    <ClInclude Include="sylar\protocol.h" />
+    <ClInclude Include="sylar\rock\rock_protocol.h" />
+    <ClInclude Include="sylar\rock\rock_stream.h" />
+    <ClInclude Include="sylar\scheduler.h" />
+    <ClInclude Include="sylar\singleton.h" />
+    <ClInclude Include="sylar\socket.h" />
+    <ClInclude Include="sylar\stream.h" />
+    <ClInclude Include="sylar\stream\async_socket_stream.h" />
+    <ClInclude Include="sylar\stream\socket_stream.h" />
+    <ClInclude Include="sylar\stream\zlib_stream.h" />
+    <ClInclude Include="sylar\tcp_server.h" />
+    <ClInclude Include="sylar\thread.h" />
+    <ClInclude Include="sylar\timer.h" />
+    <ClInclude Include="sylar\util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sylar\address.cpp" />
+    <ClCompile Include="sylar\bytearray.cpp" />
+    <ClCompile Include="sylar\config.cpp" />
+    <ClCompile Include="sylar\env.cpp" />
+    <ClCompile Include="sylar\fd_manager.cpp" />
+    <ClCompile Include="sylar\fiber.cpp" />
+    <ClCompile Include="sylar\hook.cpp" />
+    <ClCompile Include="sylar\iomanager.cpp" />
+    <ClCompile Include="sylar\log.cpp" />
+    <ClCompile Include="sylar\main.cpp" />
+    <ClCompile Include="sylar\mutex.cpp" />
+    <ClCompile Include="sylar\protocol.cpp" />
+    <ClCompile Include="sylar\rock\rock_protocol.cpp" />
+    <ClCompile Include="sylar\rock\rock_stream.cpp" />
+    <ClCompile Include="sylar\scheduler.cpp" />
+    <ClCompile Include="sylar\socket.cpp" />
+    <ClCompile Include="sylar\stream.cpp" />
+    <ClCompile Include="sylar\stream\async_socket_stream.cpp" />
+    <ClCompile Include="sylar\stream\socket_stream.cpp" />
+    <ClCompile Include="sylar\stream\zlib_stream.cpp" />
+    <ClCompile Include="sylar\tcp_server.cpp" />
+    <ClCompile Include="sylar\thread.cpp" />
+    <ClCompile Include="sylar\timer.cpp" />
+    <ClCompile Include="sylar\util.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sylar\logserver.proto" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
