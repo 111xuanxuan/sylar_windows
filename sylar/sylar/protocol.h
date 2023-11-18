@@ -8,6 +8,7 @@
 
 namespace sylar {
 
+	//消息抽象基类
 	class Message {
 	public:
 		using ptr = std::shared_ptr<Message>;
@@ -21,7 +22,9 @@ namespace sylar {
 		virtual ~Message() {}
 
 		virtual ByteArray::ptr toByteArray();
+		//转换成序列化
 		virtual bool serializeToByteArray(ByteArray::ptr bytearray) = 0;
+		//从序列化转换
 		virtual bool parseFromByteArray(ByteArray::ptr bytearray) = 0;
 
 		virtual std::string toString() const = 0;
@@ -29,6 +32,7 @@ namespace sylar {
 		virtual int32_t getType() const = 0;
 	};
 
+	//消息解密基类
 	class MessageDecoder {
 	public:
 		using ptr = std::shared_ptr<MessageDecoder>;
@@ -39,6 +43,7 @@ namespace sylar {
 
 	};
 
+	//请求类
 	class Request :public Message {
 	public:
 		using ptr = std::shared_ptr<Request>;
@@ -67,6 +72,7 @@ namespace sylar {
 
 	};
 
+	//响应类
 	class Response : public Message {
 	public:
 		using ptr= std::shared_ptr<Response> ;
@@ -86,11 +92,15 @@ namespace sylar {
 		virtual bool serializeToByteArray(ByteArray::ptr bytearray) override;
 		virtual bool parseFromByteArray(ByteArray::ptr bytearray) override;
 	protected:
+		//序列号
 		uint32_t m_sn;
+		//命令码
 		uint32_t m_cmd;
+
 		uint32_t m_result;
 		std::string m_resultStr;
 	};
+
 
 	class Notify : public Message {
 	public:
