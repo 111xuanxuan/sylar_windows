@@ -1,0 +1,2 @@
+# sylar_windows
+基于sylar的linux高性能分布式服务端框架，由linux移植windows，采用iocp替换epoll，协程采用boost的fcontext
