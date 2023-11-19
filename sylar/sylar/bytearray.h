@@ -19,10 +19,12 @@ public:
         //构造指定大小的内存块
         Node(size_t s);
 
+        //无参构造
         Node();
 
         ~Node();
 
+        //释放内存
         void free();
 
         /// 内存块地址指针

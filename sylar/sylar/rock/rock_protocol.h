@@ -7,17 +7,19 @@
 
 namespace sylar {
 
-	//请求体
+	//主体
 	class RockBody {
 	public:
 		using ptr = std::shared_ptr<RockBody>;
 
 		virtual ~RockBody(){}
 
+		//设置主体字符串
 		void setBody(const std::string& v) {
 			m_body = v;
 		}
 
+		//获取主体字符串
 		const std::string& getBody() const { 
 			return m_body; 
 		}
@@ -58,10 +60,12 @@ namespace sylar {
 
 	class RockResponse;
 
+	//请求体
 	class RockRequest :public Request, public RockBody {
 	public:
 		using ptr = std::shared_ptr<RockRequest>;
 
+		//创建响应体
 		std::shared_ptr<RockResponse> createResponse();
 
 		virtual std::string toString()const override;
@@ -73,7 +77,7 @@ namespace sylar {
 
 	};
 
-	
+	//响应体
 	class RockResponse :public Response, public RockBody {
 	public:
 		using ptr = std::shared_ptr<RockResponse>;
@@ -98,6 +102,7 @@ namespace sylar {
 		virtual bool parseFromByteArray(ByteArray::ptr bytearray) override;
 	};
 
+	//头部
 	struct RockMsgHeader {
 		RockMsgHeader();
 		uint8_t magic[2];
@@ -106,11 +111,15 @@ namespace sylar {
 		int32_t length;
 	};
 
+	
 	class RockMessageDecoder :public MessageDecoder {
 	public:
 		using ptr = std::shared_ptr<MessageDecoder>;
 
+		//解压为Message
 		virtual Message::ptr parseFrom(Stream::ptr stream) override;
+
+		//对Message进行压缩
 		virtual int32_t serializeTo(Stream::ptr stream, Message::ptr msg) override;
 	};
 

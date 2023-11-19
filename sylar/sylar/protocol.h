@@ -22,9 +22,10 @@ namespace sylar {
 		virtual ~Message() {}
 
 		virtual ByteArray::ptr toByteArray();
-		//转换成序列化
+
+		//序列化
 		virtual bool serializeToByteArray(ByteArray::ptr bytearray) = 0;
-		//从序列化转换
+		//反序列化
 		virtual bool parseFromByteArray(ByteArray::ptr bytearray) = 0;
 
 		virtual std::string toString() const = 0;
@@ -32,7 +33,7 @@ namespace sylar {
 		virtual int32_t getType() const = 0;
 	};
 
-	//消息解密基类
+	//消息压缩与解压缩
 	class MessageDecoder {
 	public:
 		using ptr = std::shared_ptr<MessageDecoder>;
@@ -101,7 +102,7 @@ namespace sylar {
 		std::string m_resultStr;
 	};
 
-
+	//通知类
 	class Notify : public Message {
 	public:
 		typedef std::shared_ptr<Notify> ptr;

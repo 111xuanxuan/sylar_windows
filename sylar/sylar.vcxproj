@@ -147,12 +147,15 @@
     <ClInclude Include="sylar\fiber.h" />
     <ClInclude Include="sylar\hook.h" />
     <ClInclude Include="sylar\iomanager.h" />
+    <ClInclude Include="sylar\library.h" />
     <ClInclude Include="sylar\log.h" />
     <ClInclude Include="sylar\macro.h" />
+    <ClInclude Include="sylar\module.h" />
     <ClInclude Include="sylar\mutex.h" />
     <ClInclude Include="sylar\noncopyable.h" />
     <ClInclude Include="sylar\protocol.h" />
     <ClInclude Include="sylar\rock\rock_protocol.h" />
+    <ClInclude Include="sylar\rock\rock_server.h" />
     <ClInclude Include="sylar\rock\rock_stream.h" />
     <ClInclude Include="sylar\scheduler.h" />
     <ClInclude Include="sylar\singleton.h" />
@@ -175,11 +178,14 @@
     <ClCompile Include="sylar\fiber.cpp" />
     <ClCompile Include="sylar\hook.cpp" />
     <ClCompile Include="sylar\iomanager.cpp" />
+    <ClCompile Include="sylar\library.cpp" />
     <ClCompile Include="sylar\log.cpp" />
     <ClCompile Include="sylar\main.cpp" />
+    <ClCompile Include="sylar\module.cpp" />
     <ClCompile Include="sylar\mutex.cpp" />
     <ClCompile Include="sylar\protocol.cpp" />
     <ClCompile Include="sylar\rock\rock_protocol.cpp" />
+    <ClCompile Include="sylar\rock\rock_server.cpp" />
     <ClCompile Include="sylar\rock\rock_stream.cpp" />
     <ClCompile Include="sylar\scheduler.cpp" />
     <ClCompile Include="sylar\socket.cpp" />
@@ -193,7 +199,7 @@
     <ClCompile Include="sylar\util.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="sylar\logserver.proto" />
+    <None Include="sylar\proto\logserver.proto" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

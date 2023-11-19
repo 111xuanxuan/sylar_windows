@@ -2,6 +2,7 @@
 #include "../log.h"
 #include "../config.h"
 #include "../endia.h"
+#include "../stream/zlib_stream.h"
 
 
 namespace sylar {
@@ -86,7 +87,7 @@ namespace sylar {
 			v &= RockBody::parseFromByteArray(bytearray);
 			return v;
 		}
-		catch (const std::exception&)
+		catch (...)
 		{
 			SYLAR_LOG_ERROR(g_logger) << "RockRequest parseFromByteArray error "
 				<< bytearray->toHexString();
@@ -222,6 +223,7 @@ namespace sylar {
 			//读取消息头
 			int rt = stream->readFixSize(&header, sizeof(header));
 
+			//读取失败
 			if (rt <= 0) {
 				SYLAR_LOG_DEBUG(g_logger) << "RockMessageDecoder decode head error rt=" << rt << " " << strerror(errno);
 				return nullptr;
@@ -256,18 +258,109 @@ namespace sylar {
 				return nullptr;
 			}
 
+			//设置读取位置
 			ba->setPosition(0);
 			if (header.flag & 0x1) {//gizp
-				
+
+				//解压
+				auto zstream = ZlibStream::CreateGzip(false);
+
+				if (zstream->write(ba, -1) != Z_OK) {
+					SYLAR_LOG_ERROR(g_logger) << "RockMessageDecoder ungzip error";
+					return nullptr;
+				}
+
+				if (zstream->flush() != Z_OK) {
+					SYLAR_LOG_ERROR(g_logger) << "RockMessageDecoder ungzip flush error";
+					return nullptr;
+				}
+
+				ba = zstream->getByteArray();
+
 			}
 
+			//获取类型
+			uint8_t type = ba->readFuint8();
+			Message::ptr msg;
+			switch (type)
+			{
+			case Message::REQUEST:
+				msg = std::make_shared<RockRequest>();
+				break;
+			case Message::RESPONSE:
+				msg = std::make_shared<RockResponse>();
+				break;
+			case Message::NOTIFY:
+				msg = std::make_shared<RockNotify>();
+				break;
+			default:
+				SYLAR_LOG_ERROR(g_logger) << "RockMessageDecoder invalid type=" << (int)type;
+				return nullptr;
+			}
+
+			if (!msg->parseFromByteArray(ba)) {
+				SYLAR_LOG_ERROR(g_logger) << "RockMessageDecoder parseFromByteArray fail type=" << (int)type;
+				return nullptr;
+			}
+
+			return msg;
 
 		}
 		catch (const std::exception&)
 		{
-
+			SYLAR_LOG_ERROR(g_logger) << "RockMessageDecoder except:" << e.what();
 		}
+		catch (...) {
+			SYLAR_LOG_ERROR(g_logger) << "RockMessageDecoder except";
+		}
+
+		return nullptr;
+
 	}
 
+
+	int32_t RockMessageDecoder::serializeTo(Stream::ptr stream, Message::ptr msg)
+	{
+		//协议头
+		RockMsgHeader header;
+		auto ba = msg->toByteArray();
+		ba->setPosition(0);
+		header.length = ba->getSize();
+
+		//长度大于压缩的最小长度
+		if ((uint32_t)header.length >= g_rock_protocol_gzip_min_length->getValue()) {
+			auto zstream = sylar::ZlibStream::CreateGzip(true);
+			if (zstream->write(ba, -1) != Z_OK) {
+				SYLAR_LOG_ERROR(g_logger) << "RockMessageDecoder serializeTo gizp error";
+				return -1;
+			}
+			if (zstream->flush() != Z_OK) {
+				SYLAR_LOG_ERROR(g_logger) << "RockMessageDecoder serializeTo gizp flush error";
+				return -2;
+			}
+
+			ba = zstream->getByteArray();
+			//采用Gzip
+			header.flag |= 0x1;
+			header.length = ba->getSize();
+		}
+
+		header.length = sylar::byteswapOnLittleEndian(header.length);
+		int rt = stream->writeFixSize(&header, sizeof(header));
+		if (rt <= 0) {
+			SYLAR_LOG_ERROR(g_logger) << "RockMessageDecoder serializeTo write header fail rt=" << rt
+				<< " errno=" << errno << " - " << strerror(errno);
+			return -3;
+		}
+		rt = stream->writeFixSize(ba, ba->getReadSize());
+		if (rt <= 0) {
+			SYLAR_LOG_ERROR(g_logger) << "RockMessageDecoder serializeTo write body fail rt=" << rt
+				<< " errno=" << errno << " - " << strerror(errno);
+			return -4;
+		}
+
+		return sizeof(header) + ba->getSize();
+
+	}
 
 }

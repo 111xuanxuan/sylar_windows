@@ -73,9 +73,12 @@ namespace sylar {
 		{
 			m_cur = tmp;
 			tmp = tmp->next;
+
+			//拥有数据的管理权限，就释放内部内存
 			if (m_owner) {
 				m_cur->free();
 			}
+
 			delete m_cur;
 		}
 	}
@@ -89,6 +92,7 @@ namespace sylar {
 	{
 		write(&value, sizeof(value));
 	}
+
 
 	void ByteArray::writeFint16(int16_t value)
 	{
@@ -415,20 +419,25 @@ namespace sylar {
 
 		addCapacity(size);
 
+		//当前内存块中的写入位置
 		size_t npos = m_position % m_baseSize;
+		//当前内存块中还剩余多少容量
 		size_t ncap = m_cur->size - npos;
+		//已经写入的
 		size_t bpos = 0;
 
 		while (size > 0) {
+			//如果剩余的大于需要写入的
 			if (ncap >= size) {
 				memcpy(m_cur->ptr + npos, (const char*)buf + bpos, size);
+				//此内存块已满
 				if (m_cur->size == (npos + size)) {
 					m_cur = m_cur->next;
 				}
 				m_position += size;
 				bpos += size;
 				size = 0;
-			}
+			}//如果需要写入的大于剩余的
 			else {
 				memcpy(m_cur->ptr + npos, (const char*)buf + bpos, ncap);
 				m_position += ncap;
@@ -447,14 +456,19 @@ namespace sylar {
 
 	void ByteArray::read(void* buf, size_t size)
 	{
+		//判断读取的大小是否超过可读取的大小
 		if (size > getReadSize()) {
 			throw std::out_of_range("** not enough len size=" + std::to_string(size)
 				+ " read_size=" + std::to_string(getReadSize()));
 		}
 
+		//当前内存块中的写入位置
 		size_t npos = m_position % m_baseSize;
+		//当前内存块的剩余容量
 		size_t ncap = m_cur->size - npos;
+		//已经写入的
 		size_t bpos = 0;
+
 		while (size > 0) {
 			if (ncap >= size) {
 				memcpy((char*)buf + bpos, m_cur->ptr + npos, size);
@@ -645,6 +659,7 @@ namespace sylar {
 	uint64_t ByteArray::getReadBuffers(std::vector<WSABUF>& buffers, uint64_t len /*= ~0ull*/) const
 	{
 		len = len > getReadSize() ? getReadSize() : len;
+
 		if (len == 0) {
 			return 0;
 		}
@@ -653,7 +668,7 @@ namespace sylar {
 
 		size_t npos = m_position % m_baseSize;
 		size_t ncap = m_cur->size - npos;
-		 WSABUF iov;
+		WSABUF iov;
 		Node* cur = m_cur;
 
 		while (len > 0) {

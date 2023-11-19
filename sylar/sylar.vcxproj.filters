@@ -12,6 +12,15 @@
     <Filter Include="sylar">
       <UniqueIdentifier>{3d2413d6-7615-4f81-bb98-e50f2f73581f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sylar\rock">
+      <UniqueIdentifier>{630e6070-8ae4-46ac-b846-3cc08c370578}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sylar\stream">
+      <UniqueIdentifier>{08893fb2-666d-415e-96b3-ed42cd75a3e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sylar\proto">
+      <UniqueIdentifier>{876c2ea8-ae7c-4a59-a0e7-d739252949b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sylar\util.h">
@@ -77,12 +86,33 @@
     <ClInclude Include="sylar\tcp_server.h">
       <Filter>sylar</Filter>
     </ClInclude>
-    <ClInclude Include="sylar\stream\socket_stream.h" />
-    <ClInclude Include="sylar\rock\rock_stream.h" />
-    <ClInclude Include="sylar\stream\async_socket_stream.h" />
-    <ClInclude Include="sylar\protocol.h" />
-    <ClInclude Include="sylar\rock\rock_protocol.h" />
-    <ClInclude Include="sylar\stream\zlib_stream.h" />
+    <ClInclude Include="sylar\stream\zlib_stream.h">
+      <Filter>sylar\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\stream\socket_stream.h">
+      <Filter>sylar\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\stream\async_socket_stream.h">
+      <Filter>sylar\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\protocol.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\rock\rock_stream.h">
+      <Filter>sylar\rock</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\rock\rock_protocol.h">
+      <Filter>sylar\rock</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\module.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\library.h">
+      <Filter>sylar</Filter>
+    </ClInclude>
+    <ClInclude Include="sylar\rock\rock_server.h">
+      <Filter>sylar\rock</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sylar\main.cpp">
@@ -139,26 +169,37 @@
     <ClCompile Include="sylar\tcp_server.cpp">
       <Filter>sylar</Filter>
     </ClCompile>
-    <ClCompile Include="sylar\stream\socket_stream.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="sylar\stream\zlib_stream.cpp">
+      <Filter>sylar\stream</Filter>
     </ClCompile>
-    <ClCompile Include="sylar\rock\rock_stream.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="sylar\stream\socket_stream.cpp">
+      <Filter>sylar\stream</Filter>
     </ClCompile>
     <ClCompile Include="sylar\stream\async_socket_stream.cpp">
-      <Filter>源文件</Filter>
+      <Filter>sylar\stream</Filter>
     </ClCompile>
     <ClCompile Include="sylar\protocol.cpp">
-      <Filter>源文件</Filter>
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\rock\rock_stream.cpp">
+      <Filter>sylar\rock</Filter>
     </ClCompile>
     <ClCompile Include="sylar\rock\rock_protocol.cpp">
-      <Filter>源文件</Filter>
+      <Filter>sylar\rock</Filter>
     </ClCompile>
-    <ClCompile Include="sylar\stream\zlib_stream.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="sylar\module.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\library.cpp">
+      <Filter>sylar</Filter>
+    </ClCompile>
+    <ClCompile Include="sylar\rock\rock_server.cpp">
+      <Filter>sylar\rock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sylar\logserver.proto" />
+    <None Include="sylar\proto\logserver.proto">
+      <Filter>sylar\proto</Filter>
+    </None>
   </ItemGroup>
 </Project>
