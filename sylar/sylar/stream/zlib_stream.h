@@ -43,9 +43,6 @@ namespace sylar {
 		static ZlibStream::ptr CreateGzip(bool encode, uint32_t buff_size = 4096);
 		static ZlibStream::ptr CreateZlib(bool encode, uint32_t buff_size = 4096);
 		static ZlibStream::ptr CreateDeflate(bool encode, uint32_t buff_size = 4096);
-		static ZlibStream::ptr Create(bool encode, uint32_t buff_size = 4096,
-			Type type = DEFLATE, int level = DEFAULT_COMPRESSION, int window_bits = 15
-			, int memlevel = 8, Strategy strategy = DEFAULT);
 
 		ZlibStream(bool encode, uint32_t buff_size = 4096);
 		~ZlibStream();
@@ -81,6 +78,11 @@ namespace sylar {
 
 	private:
 
+		static ZlibStream::ptr Create(bool encode, uint32_t buff_size = 4096,
+			Type type = DEFLATE, int level = DEFAULT_COMPRESSION, int window_bits = 15
+			, int memlevel = 8, Strategy strategy = DEFAULT);
+
+
 		int init(Type type = DEFLATE, int level = DEFAULT_COMPRESSION, int window_bits = 15, int memlevel = 8, Strategy strategy = DEFAULT);
 
 		int encode(const WSABUF* v, const uint64_t& size, bool finish);
@@ -89,11 +91,13 @@ namespace sylar {
 	private:
 
 		z_stream m_zstream;
+		//每WSABUF内存大小
 		uint32_t m_buffSize;
 		//是压缩还是解压
 		bool m_encode;
 		//结束后是否释放内存
 		bool m_free;
+		//存储结果
 		std::vector<WSABUF> m_buffs;
 
 	};

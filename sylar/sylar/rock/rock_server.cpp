@@ -15,42 +15,18 @@ namespace sylar {
 	void sylar::RockServer::handleClient(Socket::ptr client)
 	{
 		SYLAR_LOG_DEBUG(g_logger) << "handleClient " << *client;
+		//根据client创建一个session类
 		RockSession::ptr session= std::make_shared<sylar::RockSession>(client);
+		//设置工作调度器
 		session->setWorker(m_worker);
 
-		ModuleMgr::GetInstance()->foreach(Module::ROCK, [session](Module::ptr m) {
-			m->onConnect(session);
+		session->setDisconnectCb([client](AsyncSocketStream::ptr stream) {
+			SYLAR_LOG_INFO(g_logger) << "Client leave " << *client;
 			});
 
-		session->setDisconnectCb([](AsyncSocketStream::ptr stream) {
-			ModuleMgr::GetInstance()->foreach(Module::ROCK,
-				[stream](Module::ptr m) {
-					m->onDisconnect(stream);
-				});
-			});
-
-		session->setRequestHandler([](RockRequest::ptr req, RockResponse::ptr rsp, RockStream::ptr conn)->bool {
-			bool rt = false;
-			ModuleMgr::GetInstance()->foreach(Module::ROCK,
-				[&rt, req, rsp, conn](Module::ptr m) {
-					if (rt) {
-						return;
-					}
-					rt = m->handleRequest(req, rsp, conn);
-				});
-			return rt;
-			});
-
-		session->setNotifyHandler([](RockNotify::ptr nty,RockStream::ptr conn)->bool {
-			bool rt = false;
-			ModuleMgr::GetInstance()->foreach(Module::ROCK,
-				[&rt, nty, conn](Module::ptr m) {
-					if (rt) {
-						return;
-					}
-					rt = m->handleNotify(nty, conn);
-				});
-			return rt;
+		session->setRequestHandler([](sylar::RockRequest::ptr req, sylar::RockResponse::ptr rsp, sylar::RockStream::ptr conn)->bool {
+			rsp->setResultStr(req->getBody());
+			return true;
 			});
 
 		session->start();

@@ -1,9 +1,9 @@
 #pragma once
 #ifndef __SYLAR_ROCK_ROCK_PROTOCOL_H__
 #define __SYLAR_ROCK_ROCK_PROTOCOL_H__
-
+//Rock协议
 #include "../protocol.h"
-#include <google/protobuf/message.h>
+//#include <google/protobuf/message.h>
 
 namespace sylar {
 
@@ -53,6 +53,7 @@ namespace sylar {
 
 
 	protected:
+		//主体数据
 		std::string m_body;
 
 	};
@@ -90,6 +91,7 @@ namespace sylar {
 		virtual bool parseFromByteArray(ByteArray::ptr bytearray)override;
 	};
 
+	//通知体
 	class RockNotify :public Notify, public RockBody {
 	public:
 		using ptr = std::shared_ptr<RockNotify>;
@@ -106,20 +108,21 @@ namespace sylar {
 	struct RockMsgHeader {
 		RockMsgHeader();
 		uint8_t magic[2];
+		//版本
 		uint8_t version;
 		uint8_t flag;
 		int32_t length;
 	};
 
-	
+	//数据解压缩类
 	class RockMessageDecoder :public MessageDecoder {
 	public:
 		using ptr = std::shared_ptr<MessageDecoder>;
 
-		//解压为Message
+		//数据解压
 		virtual Message::ptr parseFrom(Stream::ptr stream) override;
 
-		//对Message进行压缩
+		//对数据进行压缩
 		virtual int32_t serializeTo(Stream::ptr stream, Message::ptr msg) override;
 	};
 

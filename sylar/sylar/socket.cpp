@@ -353,6 +353,15 @@ namespace sylar {
 		return false;
 	}
 
+	static DWORD calDataSize(LPWSABUF wsabufs, int length) {
+		DWORD sum = 0;
+		for (int i=0;i<length;++i)
+		{
+			sum += strlen(wsabufs[i].buf);
+		}
+		return sum;
+	}
+
 	int Socket::send(const void* buffer, size_t length, int flags /*= 0*/)
 	{
 		if (isConnected()) {
@@ -360,8 +369,16 @@ namespace sylar {
 			buf.buf = (char*)buffer;
 			buf.len = length;
 			DWORD num;
-			s_send(m_sock, &buf, 1,&num,flags);
-			return num;
+			DWORD rt= s_send(m_sock, &buf, 1,&num,flags);
+
+			if (rt == 0) {
+				return num;
+			}
+			else
+			{
+				return rt;
+			}
+
 		}
 		return -1;
 	}
@@ -370,8 +387,14 @@ namespace sylar {
 	{
 		if (isConnected()) {
 			DWORD num;
-			s_send(m_sock, (LPWSABUF)buffers, length, &num, flags);
-			return num;
+			DWORD rt= s_send(m_sock, (LPWSABUF)buffers, length, &num, flags);
+			if (rt == 0) {
+				return num;
+			}
+			else
+			{
+				return rt;
+			}
 		}
 		return -1;
 	}
@@ -383,7 +406,14 @@ namespace sylar {
 			buf.buf = (char*)buffer;
 			buf.len = length;
 			DWORD num;
-			s_sendto(m_sock, &buf, 1,to->getAddr(),to->getAddrLen(), &num, flags);
+			DWORD rt= s_sendto(m_sock, &buf, 1,to->getAddr(),to->getAddrLen(), &num, flags);
+			if (rt == 0) {
+				return num;
+			}
+			else
+			{
+				return rt;
+			}
 			return num;
 		}
 		return -1;
@@ -393,7 +423,14 @@ namespace sylar {
 	{
 		if (!isConnected()) {
 			DWORD num;
-			s_sendto(m_sock, (LPWSABUF)buffers, length, to->getAddr(), to->getAddrLen(), &num, flags);
+			DWORD rt= s_sendto(m_sock, (LPWSABUF)buffers, length, to->getAddr(), to->getAddrLen(), &num, flags);
+			if (rt == 0) {
+				return num;
+			}
+			else
+			{
+				return rt;
+			}
 			return num;
 		}
 		return -1;
@@ -405,9 +442,7 @@ namespace sylar {
 			WSABUF buf;
 			buf.buf = (char*)buffer;
 			buf.len = length;
-			DWORD num;
-			s_recv(m_sock, &buf, 1, &num, flags);
-			return num;
+			return s_recv(m_sock, &buf, 1, nullptr, flags);
 		}
 		return -1;
 	}
@@ -415,9 +450,7 @@ namespace sylar {
 	int Socket::recv(WSABUF* buffers, size_t length, int flags /*= 0*/)
 	{
 		if (isConnected()) {
-			DWORD num;
-			s_recv(m_sock,(LPWSABUF )&buffers, length, &num, flags);
-			return num;
+			return s_recv(m_sock,(LPWSABUF )buffers, length, nullptr, flags);
 		}
 		return -1;
 	}
@@ -428,10 +461,8 @@ namespace sylar {
 			WSABUF buf;
 			buf.buf = (char*)buffer;
 			buf.len = length;
-			DWORD num;
 			int len = from->getAddrLen();
-			s_recvfrom(m_sock, &buf, 1,from->getAddr(),(LPINT)&len, &num, flags);
-			return num;
+			return s_recvfrom(m_sock, &buf, 1,from->getAddr(),(LPINT)&len, nullptr, flags);
 		}
 		return -1;
 	}
@@ -439,10 +470,8 @@ namespace sylar {
 	int Socket::recvFrom(WSABUF* buffers, size_t length, Address::ptr from, int flags /*= 0*/)
 	{
 		if (isConnected()) {
-			DWORD num;
 			int len = from->getAddrLen();
-			s_recvfrom(m_sock, (LPWSABUF)buffers, length, from->getAddr(), (LPINT)&len, &num, flags);
-			return num;
+			return s_recvfrom(m_sock, (LPWSABUF)buffers, length, from->getAddr(), (LPINT)&len, nullptr, flags);;
 		}
 		return -1;
 	}

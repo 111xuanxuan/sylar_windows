@@ -41,12 +41,6 @@ namespace sylar {
 
 
 #if BYTE_ORDER == BIG_ENDIAN
-#define BYTE_ORDER BIG_ENDIAN
-#else
-#define BYTE_ORDER LITTLE_ENDIAN
-#endif
-
-#if BYTE_ORDER == BIG_ENDIAN
 
 	template<typename T>
 	T byteswapOnLittleEndian(T t) {

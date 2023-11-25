@@ -6,13 +6,13 @@
 #ifndef __SYLAR_SCHEDULER_H__
 #define __SYLAR_SCHEDULER_H__
 
+#include "mutex.h"
 #include <memory>
 #include <vector>
 #include <list>
 #include <iostream>
 #include "fiber.h"
 #include "thread.h"
-#include "mutex.h"
 
 
 

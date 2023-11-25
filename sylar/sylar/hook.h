@@ -62,13 +62,13 @@ namespace sylar {
 
 	BOOL s_accept(SOCKET sListenSocket, SOCKET sAcceptSocket, PVOID lpOutputBuffer, DWORD dwReceiveDataLength, DWORD dwLocalAddressLength, DWORD dwRemoteAddressLength, LPDWORD  lpdwBytesReceived);
 
-	BOOL s_recv(SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, LPDWORD  lpNumberOfBytesRecvd, DWORD flags);
+	DWORD s_recv(SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, LPDWORD  lpNumberOfBytesRecvd, DWORD flags);
 
-	BOOL s_recvfrom(SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, sockaddr* lpFrom, LPINT lpFromlen, LPDWORD  lpNumberOfBytesRecvd, DWORD flags);
-
-	BOOL s_send(SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, LPDWORD  lpNumberOfBytesSent, DWORD flags);
-
-	BOOL s_sendto(SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, const sockaddr* lpTo, int iTolen, LPDWORD  lpNumberOfBytesSent, DWORD flags);
+	DWORD s_recvfrom(SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, sockaddr* lpFrom, LPINT lpFromlen, LPDWORD  lpNumberOfBytesRecvd, DWORD flags);
+	
+	DWORD s_send(SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, LPDWORD  lpNumberOfBytesSent, DWORD flags);
+	
+	DWORD s_sendto(SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, const sockaddr* lpTo, int iTolen, LPDWORD  lpNumberOfBytesSent, DWORD flags);
 
 	BOOL s_closesocket(SOCKET s);
 

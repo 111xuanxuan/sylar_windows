@@ -10,6 +10,7 @@
 namespace sylar {
 
 
+	//异步SocketStream类
 	class AsyncSocketStream :public SocketStream, public std::enable_shared_from_this<AsyncSocketStream> {
 	public:
 		using ptr = std::shared_ptr<AsyncSocketStream>;
@@ -24,6 +25,7 @@ namespace sylar {
 
 
 	public:
+		//错误代码枚举
 		enum Error {
 			OK = 0,
 			TIMEOUT = -1,
@@ -32,6 +34,7 @@ namespace sylar {
 		};
 
 	protected:
+
 		struct SendCtx {
 		public:
 			using ptr= std::shared_ptr<SendCtx>;
@@ -40,23 +43,29 @@ namespace sylar {
 			virtual bool doSend(AsyncSocketStream::ptr stream) = 0;
 		};
 
+		//上下文
 		struct Ctx : public SendCtx {
 		public:
 			using ptr= std::shared_ptr<Ctx>;
 			virtual ~Ctx() {}
 			Ctx();
 
+			//序列号
 			uint32_t sn;
 			uint32_t timeout;
 			uint32_t result;
+			//是否超时
 			bool timed;
 
+			//调度器
 			std::atomic<Scheduler*> scheduler;
 			Fiber::ptr fiber;
+			//定时器
 			Timer::ptr timer;
 
 			std::string resultStr = "ok";
 
+			//Response,执行相应的fiber
 			virtual void doRsp();
 		};
 
@@ -94,6 +103,7 @@ namespace sylar {
 		virtual void doWrite();
 		virtual void startRead();
 		virtual void startWrite();
+		//超时
 		virtual void onTimeOut(Ctx::ptr ctx);
 		virtual Ctx::ptr doRecv() = 0;
 		virtual void onClose() {}
@@ -104,9 +114,11 @@ namespace sylar {
 		template<class T>
 		std::shared_ptr<T> getCtxAs(uint32_t sn) {
 			auto ctx = getCtx(sn);
+
 			if (ctx) {
 				return std::dynamic_pointer_cast<T>(ctx);
 			}
+
 			return nullptr;
 		}
 
@@ -129,27 +141,38 @@ namespace sylar {
 		protected:
 			FiberSemaphore m_sem;
 			FiberSemaphore m_waitSem;
+
 			RWMutexType m_queueMutex;
+			//发送任务队列
 			std::list<SendCtx::ptr> m_queue;
+
 			RWMutexType m_mutex;
+			//上下文
 			std::unordered_map<uint32_t, Ctx::ptr> m_ctxs;
 
 			uint32_t m_sn;
+			//是否自动连接
 			bool m_autoConnect;
 			uint16_t m_tryConnectCount;
+			//定时器
 			sylar::Timer::ptr m_timer;
+			//io调度器
 			sylar::IOManager* m_iomanager;
+			//工作调度器
 			sylar::IOManager* m_worker;
 
+			//连接回调
 			connect_callback m_connectCb;
+			//断开连接回调
 			disconnect_callback m_disconnectCb;
-
+			//数据
 			boost::any m_data;
 		public:
 			bool recving = false;
 	};
 
 
+	//异步SocketStream管理器
 	class AsyncSocketStreamManager {
 	public:
 		using RWMutexType = RWMutex;
@@ -185,7 +208,9 @@ namespace sylar {
 		uint32_t m_size;
 		std::atomic_uint32_t  m_idx;
 		std::vector<AsyncSocketStream::ptr> m_datas;
+		//连接回调
 		connect_callback m_connectCb;
+		//断开连接回调
 		disconnect_callback m_disconnectCb;
 
 	};

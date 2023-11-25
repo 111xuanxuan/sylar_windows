@@ -11,23 +11,35 @@
 
 namespace sylar {
 
-
+	//TcpServer配置
 	struct TcpServerConf {
 		using ptr = std::shared_ptr<TcpServerConf>;
 
+		//服务器监听的地址列表
 		std::vector<std::string> address;
+		//是否alive
 		int keepalive = 0;
+		//超时时间
 		int timeout = 1000 * 20 * 60;
+		//是否启用ssl
 		int ssl = 0;
+		//服务器唯一标识id
 		std::string id;
 		/// 服务器类型，http, ws, rock
 		std::string type = "http";
+		//服务器名称
 		std::string name;
+		//SSL证书文件路径
 		std::string cert_file;
+		//SSL密钥文件路径
 		std::string key_file;
+		// 接受连接的管理器名称
 		std::string accept_worker;
+		//处理I/O操作的管理器名称
 		std::string io_worker;
+		//处理业务逻辑的的管理器名称
 		std::string process_worker;
+		//存储其他配置参数的映射
 		std::map<std::string, std::string> args;
 
 		bool isValid()const {
@@ -52,6 +64,7 @@ namespace sylar {
 		}
 	};
 
+	//字符串到TcpServerConf的转换
 	template<>
 	class LexicalCast<std::string, TcpServerConf> {
 	public:
@@ -81,6 +94,7 @@ namespace sylar {
 
 	};
 
+	//TcpServerConf到字符串的转换
 	template<>
 	class LexicalCast<TcpServerConf, std::string> {
 	public:
@@ -108,6 +122,8 @@ namespace sylar {
 		}
 	};
 
+
+	//TcpServer类
 	class TcpServer : public std::enable_shared_from_this<TcpServer>, Noncopyable {
 	public:
 		using ptr = std::shared_ptr<TcpServer>;
@@ -190,6 +206,7 @@ namespace sylar {
 		std::vector<Socket::ptr> m_socks;
 		/// 新连接的Socket工作的调度器
 		IOManager* m_worker;
+		//io调度管理器
 		IOManager* m_ioWorker;
 		/// 服务器Socket接收连接的调度器
 		IOManager* m_acceptWorker;
@@ -201,9 +218,9 @@ namespace sylar {
 		std::string m_type = "tcp";
 		/// 服务是否停止
 		bool m_isStop;
-
+		//是否含有ssl
 		bool m_ssl = false;
-
+		//服务器配置
 		TcpServerConf::ptr m_conf;
 
 	};

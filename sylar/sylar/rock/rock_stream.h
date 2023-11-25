@@ -35,7 +35,7 @@ namespace sylar {
 
 	};
 
-
+	//RockStream类
 	class RockStream :public AsyncSocketStream {
 	public:
 		using ptr = std::shared_ptr<RockStream>;
@@ -45,13 +45,18 @@ namespace sylar {
 		RockStream(Socket::ptr sock);
 		~RockStream();
 		
+		//发送消息
 		int32_t sendMessage(Message::ptr msg);
 		RockResult::ptr request(RockRequest::ptr req, uint32_t timeout_ms);
 
+		//获取请求回调
 		request_handler getRequestHandler() const { return m_requestHandler; }
+		//获取通知回调
 		notify_handler getNotifyHandler() const { return m_notifyHandler; }
 
+		//设置请求回调
 		void setRequestHandler(request_handler v) { m_requestHandler = v; }
+		//设置通知回调
 		void setNotifyHandler(notify_handler v) { m_notifyHandler = v; }
 
 		template<class T>
@@ -75,6 +80,7 @@ namespace sylar {
 			using ptr= std::shared_ptr<RockSendCtx> ;
 			Message::ptr msg;
 
+			//发送数据
 			virtual bool doSend(AsyncSocketStream::ptr stream) override;
 		};
 
@@ -83,6 +89,7 @@ namespace sylar {
 			RockRequest::ptr request;
 			RockResponse::ptr response;
 
+			//发送数据
 			virtual bool doSend(AsyncSocketStream::ptr stream) override;
 		};
 
@@ -92,22 +99,27 @@ namespace sylar {
 		void handleNotify(sylar::RockNotify::ptr nty);
 
 	private:
+		//消息压缩解锁
 		RockMessageDecoder::ptr m_decoder;
+		//处理请求
 		request_handler m_requestHandler;
+		//处理通知
 		notify_handler m_notifyHandler;
+		//数据
 		boost::any m_data;
+		//序列号
 		std::atomic<uint32_t> m_sn = 0;
 
 	};
 
-
+	//RockSession类
 	class RockSession :public RockStream {
 	public:
 		using ptr = std::shared_ptr<RockSession>;
 		RockSession(Socket::ptr sock);
 	};
 
-
+	//RockConnect类
 	class RockConnection :public RockStream {
 	public:
 		using ptr = std::shared_ptr<RockConnection>;

@@ -4,8 +4,6 @@
 namespace sylar {
 
 
-
-
 	sylar::ByteArray::ptr Message::toByteArray()
 	{
 		ByteArray::ptr ba = std::make_shared<ByteArray>();

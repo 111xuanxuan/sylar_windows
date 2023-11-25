@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>E:\LIB\OpenSSL-Win64\include;E:\LIB\boost_1_83_0;E:\LIB\yaml-cpp\include;E:\LIB\protobuf\src;E:\LIB\zlib;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\LIB\OpenSSL-Win64\lib;E:\LIB\boost_1_83_0\stage\lib;E:\LIB\yaml-cpp\build\Debug;E:\LIB\protobuf\build\Debug;E:\LIB\zlib\contrib\vstudio\vc14\x64\ZlibStatDebug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>E:\LIB\OpenSSL-Win64\lib;E:\LIB\boost_1_83_0\stage\lib;E:\LIB\yaml-cpp\build\Debug;E:\LIB\zlib\build\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -117,8 +117,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>E:\LIB\OpenSSL-Win64\lib;E:\LIB\boost_1_83_0\stage\lib;E:\LIB\yaml-cpp\build\Debug;E:\LIB\protobuf\build\Debug;E:\LIB\zlib\contrib\vstudio\vc14\x64\ZlibStatDebug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>yaml-cppd.lib;libprotobufd;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\LIB\OpenSSL-Win64\lib;E:\LIB\boost_1_83_0\stage\lib;E:\LIB\yaml-cpp\build\Debug;E:\LIB\zlib\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>yaml-cppd.lib;zlibstaticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

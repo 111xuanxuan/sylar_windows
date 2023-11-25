@@ -10,6 +10,7 @@
 
 namespace sylar {
 
+	//SocketStream类，以流的形式进行网络通信
 	class SocketStream :public Stream {
 	public:
 		using ptr = std::shared_ptr<SocketStream>;
@@ -42,6 +43,7 @@ namespace sylar {
 
 		/// Socket类
 		Socket::ptr m_socket;
+		//标识符id
 		uint64_t m_id : 63;
 		/// 是否主控
 		bool m_owner : 1;

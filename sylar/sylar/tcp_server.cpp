@@ -24,6 +24,7 @@ namespace sylar {
 
 	TcpServer::~TcpServer()
 	{
+		//关闭所有监听套接字
 		for (auto& i : m_socks) {
 			i->close();
 		}
@@ -101,7 +102,9 @@ namespace sylar {
 		if (!m_isStop) {
 			return true;
 		}
+
 		m_isStop = false;
+
 		for (auto& sock : m_socks) {
 			m_acceptWorker->schedule(std::bind(&TcpServer::startAccept,
 				shared_from_this(), sock));
@@ -149,15 +152,16 @@ namespace sylar {
 
 	void TcpServer::startAccept(Socket::ptr sock)
 	{
+		        
 		while (!m_isStop) {
+			//接收连接
 			Socket::ptr client = sock->accept();
 
+			//如果建立连接成功
 			if (client) {
 				client->setRecvTimeout(m_recvTimeout);
 				m_ioWorker->schedule(std::bind(&TcpServer::handleClient, shared_from_this(), client));
-			}
-			else
-			{
+			}else{
 				SYLAR_LOG_ERROR(g_logger) << "accept errno=" << sock->getError()
 					<< " errstr=" << strerror(sock->getError());
 			}

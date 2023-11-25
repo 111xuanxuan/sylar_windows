@@ -529,6 +529,7 @@ namespace sylar {
 			throw std::out_of_range("set_position out of range");
 		}
 		m_position = v;
+
 		if (m_position > m_size) {
 			m_size = m_position;
 		}
@@ -734,6 +735,7 @@ namespace sylar {
 		if (len == 0) {
 			return 0;
 		}
+
 		addCapacity(len);
 		uint64_t size = len;
 

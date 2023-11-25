@@ -18,8 +18,6 @@ namespace sylar {
 			(uint32_t)(1024 * 1024 * 64), "rock protocol gizp min length");
 
 
-
-
 	bool RockBody::serializeToByteArray(ByteArray::ptr bytearray)
 	{
 		bytearray->writeStringF32(m_body);
@@ -32,7 +30,7 @@ namespace sylar {
 		return true;
 	}
 
-	std::shared_ptr<sylar::RockResponse> RockRequest::createResponse()
+	RockResponse::ptr RockRequest::createResponse()
 	{
 		RockResponse::ptr rt = std::make_shared<RockResponse>();
 		rt->setSn(m_sn);
@@ -200,18 +198,11 @@ namespace sylar {
 
 	static const uint8_t s_rock_magic[2] = { 0x12,0x21 };
 
-
-
-
 	RockMsgHeader::RockMsgHeader()
 		:magic{ s_rock_magic[0], s_rock_magic[1] }
 		, version(1)
 		, flag(0)
-		, length(0) {
-			{
-
-			}
-
+		, length(0) { 
 	}
 
 	sylar::Message::ptr sylar::RockMessageDecoder::parseFrom(Stream::ptr stream)
@@ -229,7 +220,7 @@ namespace sylar {
 				return nullptr;
 			}
 
-			if (memcpy(header.magic, s_rock_magic, sizeof(s_rock_magic))) {
+			if (memcmp(header.magic, s_rock_magic, sizeof(s_rock_magic))) {
 				SYLAR_LOG_ERROR(g_logger) << "RockMessageDecoder head.magic error";
 				return nullptr;
 			}
@@ -238,6 +229,7 @@ namespace sylar {
 				SYLAR_LOG_ERROR(g_logger) << "RockMessageDecoder head.version != 0x1";
 				return nullptr;
 			}
+
 
 			//消息长度
 			header.length = byteswapOnLittleEndian(header.length);
@@ -306,7 +298,7 @@ namespace sylar {
 			return msg;
 
 		}
-		catch (const std::exception&)
+		catch (const std::exception& e)
 		{
 			SYLAR_LOG_ERROR(g_logger) << "RockMessageDecoder except:" << e.what();
 		}

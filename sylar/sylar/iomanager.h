@@ -45,6 +45,7 @@ namespace sylar {
 
 				//重叠结构
 				OVERLAPPED overlapped;
+                DWORD dwDataLength = 0;
                 //事件执行的调度器
                 Scheduler* scheduler = nullptr;
                 //事件协程

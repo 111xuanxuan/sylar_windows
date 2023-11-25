@@ -5,9 +5,8 @@
 #include "noncopyable.h"
 #include <atomic>
 #include <shared_mutex>
-#include <list>
 #include "fiber.h"
-#include "scheduler.h"
+
 
 namespace sylar {
 
@@ -15,7 +14,6 @@ namespace sylar {
 	using RWMutex = std::shared_mutex;
 	using ReadLock = std::shared_lock<std::shared_mutex>;
 	using WriteLock = std::unique_lock<std::shared_mutex>;
-
 
 	class Spinlock final:Noncopyable {
 	public:
@@ -47,17 +45,25 @@ namespace sylar {
 
 		FiberSemaphore(size_t initial_concurrency = 0);
 		~FiberSemaphore();
-
+		
+		//尝试等待
 		bool tryWait();
+		//等待
 		void wait();
+		//执行一个
 		void notify();
+		//执行全部
 		void notifyAll();
 
+		//获取当前并发数
 		size_t getConcurrency() const { return m_concurrency; }
+		//重置并发数
 		void reset() { m_concurrency = 0; }
 	private:
 		MutexType m_mutex;
-		std::list<std::pair<Scheduler*, Fiber::ptr> > m_waiters;
+		//信号等待列表
+		std::list<std::pair<Scheduler*,typename Fiber::ptr> > m_waiters;
+		//信号数量(当前可并发数数量)
 		size_t m_concurrency;
 	};
 

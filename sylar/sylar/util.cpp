@@ -6,6 +6,7 @@
 #include <dbghelp.h>
 #pragma comment(lib,"dbghelp.lib")
 #endif
+#include <random>
 
 namespace  fs = std::filesystem;
 
@@ -145,6 +146,7 @@ namespace sylar {
 
 		return std::string(mdString);
 	}
+
 
 	static int __lstat(const char* file, struct stat* st = nullptr) {
 		struct stat lst;
@@ -289,4 +291,24 @@ namespace sylar {
 			return filename.substr(pos + 1);
 		}
 	}
+
+	std::string random_string(size_t length)
+	{
+		static const char charset[] ="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+		// 以随机值播种
+		std::random_device r;
+
+		// 选择 1 与 6 间的随机数
+		std::default_random_engine e1(r());
+		std::uniform_int_distribution<int> uniform_dist(0, sizeof(charset) - 1);
+
+		auto rand_char = [&uniform_dist,&e1]()->char {
+			return charset[uniform_dist(e1)];
+		};
+		std::string str(length, 0);
+		std::generate_n(str.begin(), length, rand_char);
+		return str;
+	}
+
 	}

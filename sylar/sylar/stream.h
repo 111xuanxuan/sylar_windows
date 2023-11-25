@@ -7,6 +7,7 @@
 
 namespace sylar {
 
+	//流的基类
 	class Stream {
 	public:
 		using ptr = std::shared_ptr<Stream>;

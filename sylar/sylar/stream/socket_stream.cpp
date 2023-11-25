@@ -37,6 +37,7 @@ namespace sylar {
 		std::vector<WSABUF> iovs;
 		ba->getWriteBuffers(iovs, length);
 		int rt = m_socket->recv(&iovs[0], iovs.size());
+
 		if (rt > 0) {
 			ba->setPosition(ba->getPosition() + rt);
 		}

@@ -54,6 +54,8 @@ namespace sylar {
 
 	std::string md5sum(const std::vector<WSABUF>& buffers);
 
+	std::string random_string(size_t length);
+
 	class FSUtil {
 	public:
 

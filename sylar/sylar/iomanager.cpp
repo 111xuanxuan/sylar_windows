@@ -342,6 +342,7 @@ namespace sylar {
 
 				fd_ctx = (FdContext*)completion_key;
 				FdContext::Lock lock{ fd_ctx->mutex };
+				overlapped->dwDataLength = dwTrans;
 
 				if ( (fd_ctx->events & READ)&&(fd_ctx->read.get() ==overlapped)) {
 					fd_ctx->triggerEvent(READ);

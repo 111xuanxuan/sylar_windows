@@ -12,6 +12,7 @@
 
 namespace sylar {
 
+
 	class Module {
 	public:
 		using ptr = std::shared_ptr<Module>;
@@ -87,7 +88,7 @@ namespace sylar {
 
 	};
 
-
+	//RockModule
 	class RockModule : public Module {
 	public:
 		typedef std::shared_ptr<RockModule> ptr;
@@ -95,10 +96,12 @@ namespace sylar {
 			, const std::string& version
 			, const std::string& filename);
 
+		//处理请求
 		virtual bool handleRockRequest(sylar::RockRequest::ptr request
 			, sylar::RockResponse::ptr response
 			, sylar::RockStream::ptr stream) = 0;
-
+		
+		//处理通知
 		virtual bool handleRockNotify(sylar::RockNotify::ptr notify
 			, sylar::RockStream::ptr stream) = 0;
 
@@ -111,7 +114,7 @@ namespace sylar {
 
 	};
 
-
+	//管理器
 	class ModuleManager {
 	public:
 		using RWMutexType = RWMutex;
@@ -131,6 +134,7 @@ namespace sylar {
 
 		void listAll(std::vector<Module::ptr>& ms);
 		void listByType(uint32_t type, std::vector<Module::ptr>& ms);
+		//遍历所有module,对指定的type执行回调
 		void foreach(uint32_t type, std::function<void(Module::ptr)> cb);
 
 	private:

@@ -57,7 +57,9 @@ namespace sylar {
 		 void setSn(uint32_t v) { m_sn = v; }
 		 void setCmd(uint32_t v) { m_cmd = v; }
 
+		 //序列化
 		 virtual bool serializeToByteArray(ByteArray::ptr bytearray) override;
+		 //反序列化
 		 virtual bool parseFromByteArray(ByteArray::ptr bytearray) override;
 
 		 uint64_t getTime() { return m_time; }
@@ -90,7 +92,9 @@ namespace sylar {
 		void setResult(uint32_t v) { m_result = v; }
 		void setResultStr(const std::string& v) { m_resultStr = v; }
 
+		//序列化
 		virtual bool serializeToByteArray(ByteArray::ptr bytearray) override;
+		//反序列化
 		virtual bool parseFromByteArray(ByteArray::ptr bytearray) override;
 	protected:
 		//序列号
@@ -111,7 +115,9 @@ namespace sylar {
 		uint32_t getNotify() const { return m_notify; }
 		void setNotify(uint32_t v) { m_notify = v; }
 
+		//序列化
 		virtual bool serializeToByteArray(ByteArray::ptr bytearray) override;
+		//反序列化
 		virtual bool parseFromByteArray(ByteArray::ptr bytearray) override;
 	protected:
 		uint32_t m_notify;

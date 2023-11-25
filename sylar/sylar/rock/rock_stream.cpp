@@ -4,13 +4,11 @@
 namespace sylar {
 
 	static sylar::Logger::ptr g_logger = SYLAR_LOG_NAME("system");
+
 	static sylar::ConfigVar<std::unordered_map<std::string
 		, std::unordered_map<std::string, std::string> > >::ptr g_rock_services =
 		sylar::Config::Lookup("rock_services", std::unordered_map<std::string
 			, std::unordered_map<std::string, std::string> >(), "rock_services");
-
-
-
 
 	std::string RockResult::toString() const
 	{
@@ -33,7 +31,6 @@ namespace sylar {
 
 	{
 		SYLAR_LOG_DEBUG(g_logger) << "RockStream::RockStream "
-			<< this << " "
 			<< (sock ? sock->toString() : "");
 	}
 	
@@ -41,7 +38,6 @@ namespace sylar {
 	RockStream::~RockStream()
 	{
 		SYLAR_LOG_DEBUG(g_logger) << "RockStream::~RockStream "
-			<< this << " "
 			<< (m_socket ? m_socket->toString() : "");
 	}
 
@@ -50,9 +46,13 @@ namespace sylar {
 
 	int32_t RockStream::sendMessage(Message::ptr msg)
 	{
+		//判断是否连接状态
 		if (isConnected()) {
+			//构造一个SendCtx
 			RockSendCtx::ptr ctx = std::make_shared<RockSendCtx>();
+			//赋值消息
 			ctx->msg = msg;
+			//插入队列中
 			enqueue(ctx);
 			return 1;
 		}
@@ -108,6 +108,7 @@ namespace sylar {
 	sylar::AsyncSocketStream::Ctx::ptr RockStream::doRecv()
 	{
 		auto msg = m_decoder->parseFrom(shared_from_this());
+
 		if (!msg) {
 			innerClose();
 			return nullptr;
@@ -139,6 +140,7 @@ namespace sylar {
 					<< msg->toString();
 				return nullptr;
 			}
+			//如果有请求回调
 			if (m_requestHandler) {
 				m_worker->schedule(std::bind(&RockStream::handleRequest,
 					std::dynamic_pointer_cast<RockStream>(shared_from_this()),
@@ -177,7 +179,9 @@ namespace sylar {
 
 	void RockStream::handleRequest(sylar::RockRequest::ptr req)
 	{
+		//创建请求
 		RockResponse::ptr rsp = req->createResponse();
+		//对请求进行处理并返回响应
 		if (!m_requestHandler(req, rsp, std::dynamic_pointer_cast<RockStream>(shared_from_this()))) {
 			sendMessage(rsp);
 			close();
